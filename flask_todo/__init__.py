@@ -18,10 +18,10 @@ def create_app(test_config=None):
 
     @app.route('/', methods=['GET', 'POST', 'PUT'])
     def index():
-        homework = {'name': 'homework', 'complete': False, 'date_set': '3/25/19'}
-        room = {'name': 'room', 'complete': False, 'date_set': '3/25/19'}
-        groceries = {'name': 'groceries', 'complete': False, 'date_set': '3/25/19'}
-        items = [homework, room, groceries]
+        trash = {'name': 'trash', 'complete': False, 'date_set': '3/27/19'}
+        dishes = {'name': 'dishes', 'complete': False, 'date_set': '3/27/19'}
+        homework = {'name': 'homework', 'complete': False, 'date_set': '3/27/19'}
+        items = [trash, dishes, homework]
         return render_template('index.html', items=items)
 
 

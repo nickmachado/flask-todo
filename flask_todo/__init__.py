@@ -1,13 +1,14 @@
-from flask import Flask, request, make_response, render_template
 import psycopg2
 import datetime
 
-conn=psycopg2.connect("dbname='todo_app' host='localhost'")
-try:
-    conn=psycopg2.connect("dbname='todo_app' host='localhost'")
-    print("Connection successful!")
-except:
-    print("Connection to database failed.")
+from flask import Flask, request, make_response, render_template
+
+# conn=psycopg2.connect("dbname='todo_app' host='localhost'")
+# try:
+#     conn=psycopg2.connect("dbname='todo_app' host='localhost'")
+#     print("Connection successful!")
+# except:
+#     print("Connection to database failed.")
 
 
 def create_app(test_config=None):

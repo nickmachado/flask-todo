@@ -1,11 +1,36 @@
-# Importing the library
-#import psycopg2
+import psycopg2
 
-# Connecting using psycopg2
-#conn = psycopg2.connect("dbname=todoapp host=localhost")
+import click
+from flask import current_app, g
+from flask.cli import with_appcontext
 
-# Activating the connection cursor
-#cur = conn.cursor()
 
-# Select table and display
-#cur.execute("SELECT date")
+def get_db():
+    if 'db' not in g:
+        g.db = psycopg2.connect(
+            current_app.config['DATABASE'],
+            detect_types=sqlite3.PARSE_DECLTYPES
+        )
+        g.db.row_factory = psycopg2.Row
+
+    return g.db
+
+
+def close_db(e=None):
+    db = g.pop('db', None)
+
+    if db is not None:
+        db.close()
+
+def init_db():
+    db = get_db()
+
+    with current_app.open_resource('schema.sql') as f:
+        db.executescript(f.read().decode('UTF8'))
+
+@click.command('init-db')
+@with_appcontext
+def init_db_command():
+    """Clear the existing data and create new tables."""
+    init_db()
+    click.echo('Initialized the database.')
